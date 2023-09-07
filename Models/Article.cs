@@ -1,9 +1,15 @@
 namespace MonApiMSSQL.Models
 {
-    public class Article
+    public partial class Article
     {
         public int Id { get; set; }
-        public string Titre { get; set; }
-        public string Contenu { get; set; }
+        public string Titre { get; set; } = null!;
+        public string Contenu { get; set; } = null!;
+
+        // Clé étrangère pour User
+        public int UserId { get; set; }
+
+        // Propriété de navigation
+        public User User { get; set; } = null!;
     }
 }
