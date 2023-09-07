@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MonApiMSSQL.Models;
 
 namespace MonApiMSSQL.Controllers
@@ -18,7 +19,7 @@ namespace MonApiMSSQL.Controllers
         [HttpGet]
         public IActionResult GetArticles()
         {
-            var articles = _context.Articles.ToList();
+            var articles = _context.Articles.Include(article => article.User).ToList();
             return Ok(articles);
         }
 
@@ -43,6 +44,13 @@ namespace MonApiMSSQL.Controllers
                 return BadRequest("L'article est vide");
             }
 
+            // Vérifiez si l'utilisateur associé à l'article existe
+            var userExists = _context.Users.Any(u => u.Id == article.UserId);
+            if (!userExists)
+            {
+                return BadRequest("L'utilisateur spécifié n'existe pas");
+            }
+
             _context.Articles.Add(article);
             _context.SaveChanges();
 
@@ -55,7 +63,7 @@ namespace MonApiMSSQL.Controllers
         {
             _context.Articles.RemoveRange(_context.Articles);
             _context.SaveChanges();
-            
+
             return Ok("Tous les articles ont été supprimés");
         }
 

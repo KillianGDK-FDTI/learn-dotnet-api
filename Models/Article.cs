@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace MonApiMSSQL.Models
 {
     public partial class Article
@@ -10,6 +12,6 @@ namespace MonApiMSSQL.Models
         public int UserId { get; set; }
 
         // Propriété de navigation
-        public User User { get; set; } = null!;
+        public User? User { get; set; } = null!;
     }
 }
