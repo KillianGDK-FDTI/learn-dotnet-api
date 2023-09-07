@@ -48,5 +48,32 @@ namespace MonApiMSSQL.Controllers
 
             return CreatedAtAction(nameof(GetArticleById), new { id = article.Id }, article);
         }
+
+        // DELETE api/Articles
+        [HttpDelete]
+        public IActionResult DeleteArticles()
+        {
+            _context.Articles.RemoveRange(_context.Articles);
+            _context.SaveChanges();
+            
+            return Ok("Tous les articles ont été supprimés");
+        }
+
+
+        // DELETE: api/Articles/5
+        [HttpDelete("{id}")]
+        public IActionResult DeleteArticle(int id)
+        {
+            var article = _context.Articles.FirstOrDefault(a => a.Id == id);
+            if (article == null)
+            {
+                return NotFound("L'article n'existe pas");
+            }
+
+            _context.Articles.Remove(article);
+            _context.SaveChanges();
+
+            return Ok("L'article a été supprimé");
+        }
     }
 }
