@@ -1,12 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using MonApiMSSQL.Models;
-
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+builder.Services.AddMediatR(typeof(Program).Assembly);
+
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
