@@ -10,5 +10,8 @@ namespace MonApiMSSQL.Models
 
         // Propriété de navigation pour Article
         public List<Article> Articles { get; set; } = null!;
+
+        // Propriété de navigation pour les Blogs
+        public List<Blog> Blogs { get; set; } = null!;
     }
 }
